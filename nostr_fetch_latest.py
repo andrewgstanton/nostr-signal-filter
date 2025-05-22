@@ -8,7 +8,6 @@ import urllib.parse
 import requests
 import re
 
-# --- Decode npub to hex ---
 def decode_npub(npub):
     hrp, data = bech32.bech32_decode(npub)
     if hrp != "npub":
@@ -16,22 +15,18 @@ def decode_npub(npub):
     decoded = bech32.convertbits(data, 5, 8, False)
     return ''.join(f'{b:02x}' for b in decoded)
 
-# --- Clean article title into slug format ---
-def slugify(title):
-    title = re.sub(r'[^\w\s-]', '', title)
-    title = title.replace("’", "'").replace("‘", "'")
-    title = title.replace("“", '"').replace("”", '"')
-    return re.sub(r'\s+', '-', title.strip()).lower()
+def slugify_and_encode(title):
+    return urllib.parse.quote(title.strip())
 
-# --- Shorten using TinyURL ---
 def shorten_url(url):
     try:
         res = requests.get(f"https://tinyurl.com/api-create.php?url={urllib.parse.quote(url)}")
-        return res.text if res.status_code == 200 else url
+        if res.status_code == 200:
+            return res.text
     except:
-        return url
+        pass
+    return url
 
-# --- Replace all in-body URLs with TinyURLs ---
 def shorten_links_in_text(text):
     url_pattern = r'(https?://[^\s\)\]]+)'
     urls = re.findall(url_pattern, text)
@@ -40,7 +35,6 @@ def shorten_links_in_text(text):
         text = text.replace(original, short)
     return text
 
-# --- Setup pubkey from env ---
 input_key = os.getenv("PUBKEY", "").strip()
 pubkey_hex = decode_npub(input_key) if input_key.startswith("npub") else input_key
 
@@ -49,17 +43,9 @@ RELAY_URL = "wss://relay.damus.io"
 def is_top_level_note(event):
     return event.get("kind") == 1 and not any(tag[0] == "e" for tag in event.get("tags", []))
 
-def generate_note_link(event_id):
+def generate_link(event_id):
     return f"https://primal.net/e/{event_id}"
 
-def generate_article_link(pubkey_hex, content):
-    lines = content.strip().splitlines()
-    if not lines:
-        return None
-    title = slugify(lines[0])
-    return f"https://primal.net/{pubkey_hex}/{title}"
-
-# --- Main fetch logic ---
 async def fetch_latest_event():
     async with websockets.connect(RELAY_URL) as ws:
         await ws.send(json.dumps([
@@ -92,34 +78,22 @@ async def fetch_latest_event():
 
         latest = max(all_posts, key=lambda e: e["created_at"])
         label = "Note" if latest["kind"] == 1 else "Article"
-        original_post_location = " (originally posted on Nostr/primal.net)"
         timestamp = datetime.utcfromtimestamp(latest["created_at"]).strftime('%Y-%m-%d %H:%M:%S')
         content = latest["content"].strip()
-
-        # Shorten links in content
         content_clean = shorten_links_in_text(content)
-
-        # Shorten final link
-        if latest["kind"] == 30023:
-            raw_url = generate_article_link(pubkey_hex, content)
-        else:
-            raw_url = generate_note_link(latest["id"])
+        raw_url = generate_link(latest["id"])
         final_short = shorten_url(raw_url)
 
-        # Output
-        print(f"""🕒 {timestamp}  
-📄 {label}{original_post_location}
+        output = (
+            f"[Time] {timestamp}\n"
+            f"[Type] {label} (originally posted on Nostr/primal.net)\n\n"
+            f"---\n\n"
+            f"{content_clean}\n\n"
+            f"---\n\n"
+            f"[Link] {label}: {final_short}\n"
+        )
 
----
+        print(output)
 
-{content_clean}
-
----
-
-🔗 View on Nostr:  
-{final_short}
-""")
-
-# --- Run it ---
 if __name__ == "__main__":
     asyncio.run(fetch_latest_event())
