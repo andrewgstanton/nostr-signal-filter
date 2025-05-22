@@ -51,6 +51,21 @@ def decode_bech32_to_hex(bech32_str):
     decoded = bech32.convertbits(data, 5, 8, False)
     return ''.join(f'{b:02x}' for b in decoded)
 
+# bech32 encoding for nevent
+def encode_bech32_event(event_id):
+    """
+    Encode a hex event ID into a nevent1... string using Bech32.
+    """
+    if event_id.startswith("0x"):
+        event_id = event_id[2:]
+    try:
+        data = bytes.fromhex(event_id)
+        bits = bech32.convertbits(data, 8, 5)
+        return bech32.bech32_encode("nevent", bits)
+    except Exception as e:
+        raise ValueError(f"Failed to encode event_id to nevent: {e}")
+
+
 # Bech32 decoding for npub
 def decode_npub(npub):
     hrp, data = bech32.bech32_decode(npub)
