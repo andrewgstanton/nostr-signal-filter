@@ -6,11 +6,12 @@
 
 ## 🚀 Overview
 
-This project contains two Docker-friendly Python scripts for working with your Nostr posts:
+This project contains four Docker-friendly Python scripts for working with your Nostr posts:
 
 - `nostr_fetch.py`: fetches a **summary of all top-level notes and articles**
 - `nostr_fetch_latest.py`: fetches your **latest post or long-form article**, formats it cleanly, and shortens any links for easy reposting (LinkedIn, Facebook, etc.)
 - `nostr_fetch_article.py`: fetches your **post or long-form article**, by NoteID (either an nevent1 (for note) or naddr1 (for article), formats it cleanly, and shortens any links for easy reposting (LinkedIn, Facebook, etc.)
+- `shorten_links_in_text.py " shorten links in a post
 
 ---
 
@@ -43,13 +44,13 @@ docker build -t nostr-fetcher .
 
 ## ▶️ Usage
 
-1. Fetch All Top-Level Posts
+1. Fetch All Top-Level Posts (nostr_fetch.py_
 
 ```bash
 docker run --rm -e PUBKEY=npub1yourkeyhere nostr-fetcher nostr_fetch.py
 ```
 
-2. Fetch and Format the Latest Post or Article
+2. Fetch and Format the Latest Post or Article (nostr_fetch_latest.py)
 
 ```bash
 docker run --rm -e PUBKEY=npub1yourkeyhere nostr-fetcher > latest.md
@@ -64,7 +65,7 @@ Full content with TinyURL-shortened links
 
 Final link back to the post
 
-3. Fetch and Format a specific Post or Article
+3. Fetch and Format a specific Post or Article (nostr_fetch_article.py)
 
 ```bash
 docker run --rm -e PUBKEY=npub1yourkeyhere nostr-fetcher nostr_fetch_article.py --id EVENTIDorADDRESSID > latest.md
@@ -79,6 +80,24 @@ Full content with TinyURL-shortened links
 
 Final link back to the post
 
+4. shorten links in a post (short_links_in_text.py)
+   
+**From a file:**
+```bash
+python shorten_links_in_text.py --input original_post.md --output shortened_post.md
+```
+
+**Or from stdin:**
+```bash
+cat original_post.md | python shorten_links_in_text.py
+```
+
+This helps ensure links are preserved exactly as you intend when pasting into clients like Primal.net, which may otherwise alter long URLs.
+
+**Inside Docker :**
+```bash
+docker run --rm  nostr-fetcher shorten_links_in_text.py --input=post.md
+```
 
 ---
 
@@ -110,11 +129,6 @@ To contribute:
 You can also open issues for feedback or suggestions.
 
 
-
-
-
-
-
 ---
 
 ## 🔁 Fallback Behavior
@@ -128,3 +142,7 @@ This ensures that even if an event is not publicly retrievable via relays, users
 🔗 View on Primal:
 https://primal.net/e/nevent1...
 ```
+
+
+
+
