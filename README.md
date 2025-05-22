@@ -112,3 +112,18 @@ You can also open issues for feedback or suggestions.
 
 
 
+
+
+---
+
+## 🔁 Fallback Behavior
+
+If an event ID (note or article) is not found on any queried relays, the tool will now output a direct Primal link using the original `nevent1...` or `naddr1...` string.
+
+This ensures that even if an event is not publicly retrievable via relays, users can still view it through a client like Primal:
+
+```
+❌ Event not found on any relay.
+🔗 View on Primal:
+https://primal.net/e/nevent1...
+```
