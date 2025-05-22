@@ -37,3 +37,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - Docker compatibility
 
 
+## [RELEASE-v1.0.2] - 2025-05-22
+
+### Added
+- `nostr_fetch_article.py`: fetches and formats the note/article by NoteID (noteID is formatted as neventi for notes, naddr1 for articles)
+- refactored common functions used on all nostr..py scripts and moved to utils.py
+- used multiple relays to find an article or note in nostr_fetch_article.py
+
+### Maintained
+- TinyURL shortening of rendered links
+- Markdown-safe formatting
+- Docker compatibility
+
+
