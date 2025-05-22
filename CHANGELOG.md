@@ -24,4 +24,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [RELEASE-v1.0.1] - 2025-05-21
+
+### Fixed
+- Switched to using canonical Primal URLs (`/e/{event_id}`) for all posts and articles to ensure correct rendering and redirect behavior
+- Removed all slug-generation logic that could break on special characters, casing, or title mismatch
+- Article and note types still clearly labeled in output
+
+### Maintained
+- TinyURL shortening of rendered links
+- Markdown-safe formatting
+- Docker compatibility
+
 
