@@ -6,5 +6,6 @@ COPY . .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Default command; can be overridden at runtime
-CMD ["python", "nostr_fetch_latest.py"]
+# allow any python script to be run; be overridden at runtime
+ENTRYPOINT ["python"]
+CMD ["nostr_fetch_latest.py"]

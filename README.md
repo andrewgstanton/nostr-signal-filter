@@ -45,7 +45,7 @@ docker build -t nostr-fetcher .
 1. Fetch All Top-Level Posts
 
 ```bash
-docker run --rm -e PUBKEY=npub1yourkeyhere nostr-fetcher python nostr_fetch.py
+docker run --rm -e PUBKEY=npub1yourkeyhere nostr-fetcher nostr_fetch.py
 ```
 
 2. Fetch and Format the Latest Post or Article
@@ -62,6 +62,22 @@ Label ("Note" or "Article")
 Full content with TinyURL-shortened links
 
 Final link back to the post
+
+3. Fetch and Format a specific Post or Article
+
+```bash
+docker run --rm -e PUBKEY=npub1yourkeyhere nostr-fetcher nostr_fetch_article.py --id EVENTIDorADDRESSID > latest.md
+```
+Outputs a LinkedIn-safe file (latest.md) with:
+
+Timestamp
+
+Label ("Note" or "Article")
+
+Full content with TinyURL-shortened links
+
+Final link back to the post
+
 
 ---
 

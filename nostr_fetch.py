@@ -3,15 +3,7 @@ import websockets
 import json
 import os
 from datetime import datetime
-import bech32
-
-# Bech32 decoding for npub
-def decode_npub(npub):
-    hrp, data = bech32.bech32_decode(npub)
-    if hrp != "npub":
-        raise ValueError("Invalid prefix: expected 'npub'")
-    decoded = bech32.convertbits(data, 5, 8, False)
-    return ''.join(f'{b:02x}' for b in decoded)
+from utils import format_event_output, decode_npub
 
 # Get pubkey from environment and decode if needed
 input_key = os.getenv("PUBKEY", "").strip()
@@ -55,10 +47,10 @@ async def fetch_events():
                     timestamp = datetime.utcfromtimestamp(event["created_at"]).strftime('%Y-%m-%d %H:%M:%S')
 
                     if event["kind"] == 1 and is_top_level_note(event):
-                        notes.append(f"[{timestamp}] Note:\n{event['content']}\n")
+                        notes.append(event)
 
                     elif event["kind"] == 30023:
-                        articles.append(f"[{timestamp}] Article:\n{event['content']}\n")
+                        articles.append(event)
 
                 elif data[0] == "EOSE":
                     break
@@ -69,11 +61,11 @@ async def fetch_events():
         # Output results
         print("\n📝 Top-Level Nostr Notes:\n")
         for note in notes:
-            print(note)
+            print(format_event_output(note))
 
         print("\n📚 Long-Form Nostr Articles:\n")
         for article in articles:
-            print(article)
+            print(format_event_output(article))
 
 if __name__ == "__main__":
     asyncio.run(fetch_events())
