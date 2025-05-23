@@ -50,4 +50,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - Markdown-safe formatting
 - Docker compatibility
 
+---
+
+## [RELEASE-v1.0.3] - 2025-05-22
+
+### Added
+- `shorten_links_in_text.py`: shorten links in a post
+- `format_profile.py`: utility to generate profile.md from a plaintext profile
+
+
+### Maintained
+- TinyURL shortening of rendered links
+- Markdown-safe formatting
+- Docker compatibility
 
