@@ -12,6 +12,7 @@ This project contains four Docker-friendly Python scripts for working with your 
 - `nostr_fetch_latest.py`: fetches your **latest post or long-form article**, formats it cleanly, and shortens any links for easy reposting (LinkedIn, Facebook, etc.)
 - `nostr_fetch_article.py`: fetches your **post or long-form article**, by NoteID (either an nevent1 (for note) or naddr1 (for article), formats it cleanly, and shortens any links for easy reposting (LinkedIn, Facebook, etc.)
 - `shorten_links_in_text.py` shorten links in a post
+- `format_profile.py` takes your raw text profile.txt and outputs clean marked-down sutiable for github bio or nostr
 
 ---
 
@@ -99,6 +100,22 @@ This helps ensure links are preserved exactly as you intend when pasting into cl
 docker run --rm  nostr-fetcher shorten_links_in_text.py --input=post.md
 ```
 
+5. format your profile (format_profile.py)
+You can format your professional or personal profile with styled markdown and clean TinyURLs.
+
+**From a file:**
+```bash
+python format_profile.py --input profile.txt --output profile.md
+```
+
+- Converts raw bio text into styled markdown
+- Replaces all URLs with TinyURLs
+- Ideal for GitHub profile README or Nostr bio
+
+**Inside Docker:**
+```bash
+docker run --rm nostr-fetcher format_profile.py --input=profile.txt
+```   
 ---
 
 ## ⚙️ Environment Variables
