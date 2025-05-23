@@ -11,7 +11,7 @@ This project contains four Docker-friendly Python scripts for working with your 
 - `nostr_fetch.py`: fetches a **summary of all top-level notes and articles**
 - `nostr_fetch_latest.py`: fetches your **latest post or long-form article**, formats it cleanly, and shortens any links for easy reposting (LinkedIn, Facebook, etc.)
 - `nostr_fetch_article.py`: fetches your **post or long-form article**, by NoteID (either an nevent1 (for note) or naddr1 (for article), formats it cleanly, and shortens any links for easy reposting (LinkedIn, Facebook, etc.)
-- `shorten_links_in_text.py " shorten links in a post
+- `shorten_links_in_text.py` shorten links in a post
 
 ---
 
