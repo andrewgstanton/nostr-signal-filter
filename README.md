@@ -6,7 +6,7 @@
 
 ## 🚀 Overview
 
-This project contains four Docker-friendly Python scripts for working with your Nostr posts:
+This project contains five Docker-friendly Python scripts for working with your Nostr posts and profiles
 
 - `nostr_fetch.py`: fetches a **summary of all top-level notes and articles**
 - `nostr_fetch_latest.py`: fetches your **latest post or long-form article**, formats it cleanly, and shortens any links for easy reposting (LinkedIn, Facebook, etc.)
