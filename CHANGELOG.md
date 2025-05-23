@@ -36,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - Markdown-safe formatting
 - Docker compatibility
 
+---
 
 ## [RELEASE-v1.0.2] - 2025-05-22
 
