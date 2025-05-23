@@ -45,7 +45,7 @@ docker build -t nostr-fetcher .
 
 ## ▶️ Usage
 
-1. Fetch All Top-Level Posts (nostr_fetch.py_
+1. Fetch All Top-Level Posts (nostr_fetch.py)
 
 ```bash
 docker run --rm -e PUBKEY=npub1yourkeyhere nostr-fetcher nostr_fetch.py
