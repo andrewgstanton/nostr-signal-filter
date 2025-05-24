@@ -158,6 +158,7 @@ This ensures that even if an event is not publicly retrievable via relays, users
 ❌ Event not found on any relay.
 🔗 View on Primal:
 https://primal.net/e/nevent1...
+```
 
 ### 🛠️ CLI Usage
 
@@ -165,6 +166,7 @@ To shorten a URL:
 
 ```bash
 echo "https://example.com" | ./tinyurl.sh
+```
 
 or
 
@@ -173,5 +175,3 @@ or
 ```
 
 If no input is provided, the script will display usage instructions.
-
-
