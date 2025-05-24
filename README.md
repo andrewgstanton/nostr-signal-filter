@@ -175,3 +175,15 @@ or
 ```
 
 If no input is provided, the script will display usage instructions.
+
+### 🧹 Cleanup
+
+To remove all local Docker images and containers used for this tool:
+
+```bash
+./clean.sh
+```
+
+Use with caution — this removes all containers and images from your local Docker environment.
+
+
